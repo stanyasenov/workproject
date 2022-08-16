@@ -1,0 +1,72 @@
+1.
+- ООП е модел на компютърно програмиране, който организира софтуерния дизайн около данни или обекти.
+  Един обект може да се дефинира като поле с данни, което има уникални атрибути и поведение.
+- Капсулацията е скриване на данни на даден обект от потребители
+- Полиморфизъм обектът може да се държи по различен начин при различни условия
+- Наследяване е когато един обект наследи атрибути на друг
+- Overloading е когато два метода в един и същи клас имат еднакво име но различни параметри,
+- Overriding е когато името и параметрите са еднакви
+
+2.
+- Dynamic memory е алокацията на памет during execution or run time
+- Memory leak е error в програмата която постоянно алокира нова памет.
+- Garbage collection е автоматичното освобождаване на памет която не е нужна от програмата
+
+3.
+-
+
+4.
+-
+
+5.
+Stack - Last in First Out
+Queue - First in First out
+
+
+CREATE TABLE PROGRAMMER(
+    ID INT NOT NULL BIGSERIAL,
+    NAME VARCHAR(30) NOT NULL,
+    ADDRESS VARCHAR(30) NOT NULL,
+    TITLE VARCHAR(30) NOT NULL,
+    WAGE INT,
+
+
+CREATE TABLE MODULE (
+    ID INT NOT NULL BIGSERIAL,
+    NAME VARCHAR(30) NOT NULL,
+    SOURCE_CODE VARCHAR(255),
+    DESCRIPTION VARCHAR(255),
+    PLANNED_FINISH_BY_DATE DATETIME,
+    ACTUAL_FINISH_BY_DATE DATETIME,
+    USER_ID INT,
+    CONSTRAINT FK_PROGRAMMERMODULE FOREIGN KEY (USER_ID)
+    REFERENCES PROGRAMMER(ID)
+);
+
+CREATE TABLE STAGE (
+    ID INT NOT NULL BIGSERIAL,
+    FINISH_BY_DATE DATETIME,
+    MODULE_ID INT,
+    ADMIN_PROGRAMMER_ID INT,
+    CONSTRAINT FK_STAGEMODULE
+    FOREIGN KEY (MODULE_ID) REFERENCES MODULE(ID),
+    CONSTRAINT FK_STAGEPROGRAMMER
+    FOREIGN KEY (ADMIN_PROGRAMMER_ID) REFERENCES PROGRAMMER(ID)
+);
+
+CREATE TABLE STAGE_WORKING_PROGRAMMER (
+    ID INT NOT NULL BIGSERIAL,
+    STAGE_ID INT,
+    PROGRAMMER_ID INT,
+    CONSTRAINT FK_WSWPS  FOREIGN KEY (STAGE_ID) REFERENCES STAGE(ID),
+    CONSTRAINT FK_WSWPP  FOREIGN KEY (PROGRAMMER_ID) REFERENCES PROGRAMMER(ID)
+);
+INSERT INTO MODULE (name, address, title, wage)
+VALUES ('Ivan', 'Plovdiv', 'Programmer', 1000);
+
+INSERT INTO MODULE (name, source_code, description, planned_finish_by_date, actual_finish_by_date)
+VALUES('Django', 'Lorem Ipsum', 'Lorem Ipsum', '2022-10-20', '2022-12-24');
+
+SELECT name, planned_finished_date, actual_finished_date FROM MODULE WHERE user_id = 1000;
+SELECT name from MODULE where programmer_id = 1000;
+SELECT actual_finish_date, programmer_id.name WHERE module.name = „си плюс плюс“;
